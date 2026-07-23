@@ -3,4 +3,5 @@ screenshots/
 *.png
 *.pdf
 *.html
+!index.html
 .env

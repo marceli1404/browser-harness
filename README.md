@@ -54,18 +54,33 @@ graph TD
 
 ## Installation
 
-### Prerequisites
+### Quick Install (Recommended)
 
-- Node.js 18+ (tested on Windows, macOS, Linux)
-- npm or yarn
+```bash
+git clone https://github.com/marceli1404/browser-harness.git
+cd browser-harness
+node setup.js
+```
 
-### Quick Start
+The interactive installer will:
+- Check Node.js version
+- Install dependencies
+- Download Playwright browsers
+- Configure environment
+- Verify installation
+
+### Manual Install
 
 ```bash
 git clone https://github.com/marceli1404/browser-harness.git
 cd browser-harness
 npm install
+npx playwright install
 ```
+
+### Web Installer
+
+Open `index.html` in your browser for a visual setup guide.
 
 ### Global Install (optional)
 
