@@ -4,49 +4,52 @@ A lightweight, zero-config browser automation tool built on Puppeteer. Navigate 
 
 ## Feature Tree
 
-```
-browser-harness/
-├── Navigation
-│   ├── open <url>                 Navigate and print title
-│   ├── text <url>                 Extract page text
-│   ├── fill <url> <sel> <val>     Fill input and submit
-│   ├── exec <url> <js>            Run JavaScript in page
-│   ├── download <url>             Save page HTML
-│   ├── cookies <url>              Get page cookies
-│   ├── headers <url>              Get meta tags
-│   └── tabs <url1> <url2> ...     Open multiple tabs
-│
-├── Screenshots
-│   ├── screenshot <url>           Full-page screenshot
-│   ├── viewport <url> [WxH]       Custom resolution
-│   ├── element <url> <sel>        Screenshot element
-│   ├── clip <url> {x,y,w,h}      Clipped region
-│   ├── compare <url1> <url2>      Side-by-side
-│   ├── pdf <url>                  Save as PDF
-│   └── multi-shot <url> [n] [ms]  Timed series
-│
-├── Mouse Emulation
-│   ├── move <url> x1 y1 x2 y2    Bezier curve movement
-│   ├── click <url> x y [btn]      Click at coordinates
-│   ├── double-click <url> x y     Double-click
-│   ├── right-click <url> x y      Right-click
-│   ├── drag <url> x1 y1 x2 y2    Drag with bezier path
-│   ├── hover <url> x y [ms]       Hold position
-│   ├── scroll <url> x y dx dy     Mouse wheel
-│   ├── path <url> x1,y1 x2,y2    Multiple waypoints
-│   └── wiggle <url> x y [r] [ms]  Human-like idle
-│
-└── Programmatic API
-    ├── launchBrowser(headless, viewport)
-    ├── nav, getText, fillAndSubmit, execScript
-    ├── downloadPage, cookies, headers
-    ├── mouseMove, mouseClick, mouseDoubleClick
-    ├── mouseRightClick, mouseDrag, mouseHover
-    ├── mouseScroll, mousePath, mouseWiggle
-    ├── screenshotViewport, screenshotFullPage
-    ├── screenshotClip, screenshotElement
-    ├── screenshotPdf, screenshotMultiple
-    └── screenshotCompare
+```mermaid
+graph TD
+    BH[browser-harness] --> NAV[Navigation]
+    BH --> SS[Screenshots]
+    BH --> ME[Mouse Emulation]
+    BH --> API[Programmatic API]
+
+    NAV --> N1[open - Navigate and print title]
+    NAV --> N2[text - Extract page text]
+    NAV --> N3[fill - Fill input and submit]
+    NAV --> N4[exec - Run JavaScript]
+    NAV --> N5[download - Save page HTML]
+    NAV --> N6[cookies - Get page cookies]
+    NAV --> N7[headers - Get meta tags]
+    NAV --> N8[tabs - Open multiple tabs]
+
+    SS --> S1[screenshot - Full-page]
+    SS --> S2[viewport - Custom resolution]
+    SS --> S3[element - Screenshot element]
+    SS --> S4[clip - Clipped region]
+    SS --> S5[compare - Side-by-side]
+    SS --> S6[pdf - Save as PDF]
+    SS --> S7[multi-shot - Timed series]
+
+    ME --> M1[move - Bezier curve]
+    ME --> M2[click - Click coordinates]
+    ME --> M3[double-click]
+    ME --> M4[right-click]
+    ME --> M5[drag - Bezier path]
+    ME --> M6[hover - Hold position]
+    ME --> M7[scroll - Mouse wheel]
+    ME --> M8[path - Multiple waypoints]
+    ME --> M9[wiggle - Human-like idle]
+
+    API --> A1[launchBrowser]
+    API --> A2[nav, getText, fillAndSubmit]
+    API --> A3[mouseMove, mouseClick]
+    API --> A4[mouseDrag, mouseHover]
+    API --> A5[screenshotViewport]
+    API --> A6[screenshotFullPage]
+
+    style BH fill:#f9f,stroke:#333,stroke-width:2px
+    style NAV fill:#bbf,stroke:#333
+    style SS fill:#bfb,stroke:#333
+    style ME fill:#fbb,stroke:#333
+    style API fill:#bff,stroke:#333
 ```
 
 ## Installation
