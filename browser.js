@@ -128,8 +128,8 @@ async function mouseDrag(url, startX, startY, endX, endY, options = {}) {
     await new Promise(r => setTimeout(r, 100));
     await page.mouse.down();
     
-    const path = generateBezierPath(startX, startY, endX, endY, steps);
-    for (const point of path) {
+    const dragPath = generateBezierPath(startX, startY, endX, endY, steps);
+    for (const point of dragPath) {
       await page.mouse.move(point.x, point.y);
       await new Promise(r => setTimeout(r, delay + randomDelay()));
     }
