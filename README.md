@@ -32,18 +32,41 @@ node browser.js <command> [args]
 
 ### Commands
 
+**Navigation:**
 | Command | Description | Example |
 |---------|-------------|---------|
 | `open <url>` | Navigate and print title | `node browser.js open https://google.com` |
-| `screenshot <url> [file]` | Save full-page screenshot | `node browser.js screenshot https://google.com google.png` |
 | `text <url>` | Extract page text content | `node browser.js text https://example.com` |
 | `fill <url> <sel> <val>` | Fill input and submit | `node browser.js fill https://google.com '[name=q]' 'search term'` |
 | `exec <url> <js>` | Run JavaScript in page | `node browser.js exec https://example.com 'document.title'` |
 | `download <url> [file]` | Save page HTML | `node browser.js download https://example.com page.html` |
-| `pdf <url> [file]` | Save page as PDF | `node browser.js pdf https://example.com page.pdf` |
 | `cookies <url>` | Get page cookies | `node browser.js cookies https://example.com` |
 | `headers <url>` | Get meta tags | `node browser.js headers https://example.com` |
 | `tabs <url1> <url2> ...` | Open multiple tabs | `node browser.js tabs https://google.com https://github.com` |
+
+**Screenshots:**
+| Command | Description | Example |
+|---------|-------------|---------|
+| `screenshot <url> [file]` | Full-page screenshot | `node browser.js screenshot https://google.com full.png` |
+| `viewport <url> [file] [WxH]` | Viewport screenshot | `node browser.js viewport https://google.com mobile.png 375x667` |
+| `element <url> [file] <sel>` | Screenshot element | `node browser.js element https://google.com logo.png '#logo'` |
+| `clip <url> [file] {x,y,w,h}` | Clipped screenshot | `node browser.js clip https://google.com part.png '{"x":0,"y":0,"width":500,"height":500}'` |
+| `compare <url1> <url2>` | Compare two pages | `node browser.js compare https://google.com https://bing.com` |
+| `pdf <url> [file]` | Save as PDF | `node browser.js pdf https://example.com page.pdf` |
+| `multi-shot <url> [count] [ms]` | Multiple screenshots | `node browser.js multi-shot https://google.com 5 2000` |
+
+**Mouse Emulation:**
+| Command | Description | Example |
+|---------|-------------|---------|
+| `move <url> x1 y1 x2 y2 [steps]` | Move mouse (bezier curve) | `node browser.js move https://google.com 100 100 500 300` |
+| `click <url> x y [button]` | Click at coordinates | `node browser.js click https://google.com 400 300 left` |
+| `double-click <url> x y` | Double-click | `node browser.js double-click https://google.com 400 300` |
+| `right-click <url> x y` | Right-click | `node browser.js right-click https://google.com 400 300` |
+| `drag <url> x1 y1 x2 y2` | Drag element | `node browser.js drag https://google.com 100 100 500 300` |
+| `hover <url> x y [ms]` | Hover at point | `node browser.js hover https://google.com 400 300 2000` |
+| `scroll <url> x y dx dy` | Scroll at point | `node browser.js scroll https://google.com 400 300 0 500` |
+| `path <url> x1,y1 x2,y2 ...` | Move through points | `node browser.js path https://google.com 100,100 200,200 300,100` |
+| `wiggle <url> x y [radius] [ms]` | Wiggle around point | `node browser.js wiggle https://google.com 400 300 20 2000` |
 
 ### Programmatic Usage
 
@@ -51,26 +74,55 @@ node browser.js <command> [args]
 const {
   launchBrowser,
   nav,
-  screenshotUrl,
   getText,
   fillAndSubmit,
   execScript,
   downloadPage,
-  pdf,
   cookies,
   headers,
+  mouseMove,
+  mouseClick,
+  mouseDoubleClick,
+  mouseRightClick,
+  mouseDrag,
+  mouseHover,
+  mouseScroll,
+  mousePath,
+  mouseWiggle,
+  screenshotViewport,
+  screenshotFullPage,
+  screenshotClip,
+  screenshotElement,
+  screenshotPdf,
+  screenshotMultiple,
+  screenshotCompare,
 } = require('./browser');
 
-// Example: Take a screenshot
-const screenshot = await screenshotUrl('https://example.com', 'example.png');
+// Screenshot examples
+await screenshotFullPage('https://example.com', 'full.png');
+await screenshotViewport('https://example.com', 'mobile.png', { width: 375, height: 667 });
+await screenshotElement('https://example.com', 'logo.png', '#logo');
+await screenshotClip('https://example.com', 'part.png', { x: 0, y: 0, width: 500, height: 500 });
+await screenshotPdf('https://example.com', 'page.pdf');
+await screenshotMultiple('https://example.com', 5, 2000);
+await screenshotCompare('https://google.com', 'https://bing.com');
 
-// Example: Extract text
+// Mouse emulation examples
+await mouseMove('https://example.com', 100, 100, 500, 300, { steps: 30 });
+await mouseClick('https://example.com', 400, 300, { button: 'left' });
+await mouseDoubleClick('https://example.com', 400, 300);
+await mouseRightClick('https://example.com', 400, 300);
+await mouseDrag('https://example.com', 100, 100, 500, 300);
+await mouseHover('https://example.com', 400, 300, { duration: 2000 });
+await mouseScroll('https://example.com', 400, 300, 0, 500);
+await mousePath('https://example.com', [{x:100,y:100}, {x:200,y:200}, {x:300,y:100}]);
+await mouseWiggle('https://example.com', 400, 300, { radius: 20, duration: 2000 });
+
+// Navigation
+await nav('https://example.com');
 const text = await getText('https://example.com');
-
-// Example: Run custom JavaScript
-const result = await execScript('https://example.com', `
-  Array.from(document.querySelectorAll('a')).map(a => a.href)
-`);
+await fillAndSubmit('https://google.com', '[name=q]', 'search term');
+await execScript('https://example.com', 'document.title');
 ```
 
 ## AI Integration
