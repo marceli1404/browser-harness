@@ -2,6 +2,8 @@
 
 A lightweight, zero-config browser automation tool built on Puppeteer. Navigate pages, take screenshots, extract text, fill forms, run JavaScript, and more — all from the command line.
 
+> **Note:** This project has been merged into [system-automation](https://github.com/marceli1404/system-automation) as the Puppeteer engine. The standalone `browser-harness` repo is maintained for reference; new features are developed in `system-automation`.
+
 ## Feature Tree
 
 ```mermaid
