@@ -62,17 +62,17 @@ async function mouseMove(url, startX, startY, endX, endY, options = {}) {
   const { browser, page } = await launchBrowser(false);
   try {
     await page.goto(url, { waitUntil: 'networkidle2', timeout: 30000 });
-    const path = generateBezierPath(startX, startY, endX, endY, steps);
+    const mousePath = generateBezierPath(startX, startY, endX, endY, steps);
     
     await page.mouse.move(startX, startY);
     
-    for (const point of path) {
+    for (const point of mousePath) {
       await page.mouse.move(point.x, point.y);
       await new Promise(r => setTimeout(r, delay + randomDelay()));
     }
     
     console.log(`Mouse moved from (${startX}, ${startY}) to (${endX}, ${endY})`);
-    console.log(`Path: ${path.length} steps`);
+    console.log(`Path: ${mousePath.length} steps`);
     
     if (screenshot) {
       const name = `mouse-move-${Date.now()}.png`;
@@ -81,7 +81,7 @@ async function mouseMove(url, startX, startY, endX, endY, options = {}) {
       console.log(`Screenshot: ${outPath}`);
     }
     
-    return { steps: path.length };
+    return { steps: mousePath.length };
   } finally {
     await browser.close();
   }
@@ -203,9 +203,9 @@ async function mousePath(url, points, options = {}) {
     for (let i = 0; i < points.length - 1; i++) {
       const from = points[i];
       const to = points[i + 1];
-      const path = generateBezierPath(from.x, from.y, to.x, to.y, 15);
+      const pathSegment = generateBezierPath(from.x, from.y, to.x, to.y, 15);
       
-      for (const point of path) {
+      for (const point of pathSegment) {
         await page.mouse.move(point.x, point.y);
         await new Promise(r => setTimeout(r, delay + randomDelay()));
       }
