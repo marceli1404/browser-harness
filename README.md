@@ -2,6 +2,53 @@
 
 A lightweight, zero-config browser automation tool built on Puppeteer. Navigate pages, take screenshots, extract text, fill forms, run JavaScript, and more — all from the command line.
 
+## Feature Tree
+
+```
+browser-harness/
+├── Navigation
+│   ├── open <url>                 Navigate and print title
+│   ├── text <url>                 Extract page text
+│   ├── fill <url> <sel> <val>     Fill input and submit
+│   ├── exec <url> <js>            Run JavaScript in page
+│   ├── download <url>             Save page HTML
+│   ├── cookies <url>              Get page cookies
+│   ├── headers <url>              Get meta tags
+│   └── tabs <url1> <url2> ...     Open multiple tabs
+│
+├── Screenshots
+│   ├── screenshot <url>           Full-page screenshot
+│   ├── viewport <url> [WxH]       Custom resolution
+│   ├── element <url> <sel>        Screenshot element
+│   ├── clip <url> {x,y,w,h}      Clipped region
+│   ├── compare <url1> <url2>      Side-by-side
+│   ├── pdf <url>                  Save as PDF
+│   └── multi-shot <url> [n] [ms]  Timed series
+│
+├── Mouse Emulation
+│   ├── move <url> x1 y1 x2 y2    Bezier curve movement
+│   ├── click <url> x y [btn]      Click at coordinates
+│   ├── double-click <url> x y     Double-click
+│   ├── right-click <url> x y      Right-click
+│   ├── drag <url> x1 y1 x2 y2    Drag with bezier path
+│   ├── hover <url> x y [ms]       Hold position
+│   ├── scroll <url> x y dx dy     Mouse wheel
+│   ├── path <url> x1,y1 x2,y2    Multiple waypoints
+│   └── wiggle <url> x y [r] [ms]  Human-like idle
+│
+└── Programmatic API
+    ├── launchBrowser(headless, viewport)
+    ├── nav, getText, fillAndSubmit, execScript
+    ├── downloadPage, cookies, headers
+    ├── mouseMove, mouseClick, mouseDoubleClick
+    ├── mouseRightClick, mouseDrag, mouseHover
+    ├── mouseScroll, mousePath, mouseWiggle
+    ├── screenshotViewport, screenshotFullPage
+    ├── screenshotClip, screenshotElement
+    ├── screenshotPdf, screenshotMultiple
+    └── screenshotCompare
+```
+
 ## Installation
 
 ### Prerequisites
