@@ -1,0 +1,26 @@
+{
+  "name": "browser-harness",
+  "version": "1.0.0",
+  "description": "Lightweight browser automation CLI tool built on Puppeteer",
+  "main": "browser.js",
+  "bin": {
+    "browser-harness": "./browser.js"
+  },
+  "scripts": {
+    "start": "node browser.js",
+    "test": "node browser.js open https://example.com"
+  },
+  "keywords": [
+    "browser",
+    "automation",
+    "puppeteer",
+    "screenshot",
+    "scraping",
+    "headless"
+  ],
+  "author": "marceli1404",
+  "license": "MIT",
+  "dependencies": {
+    "puppeteer": "^25.3.0"
+  }
+}
