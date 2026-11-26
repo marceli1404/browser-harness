@@ -15,7 +15,6 @@ async function launchBrowser(headless = DEFAULT_HEADLESS, viewport = { width: 19
   const browser = await puppeteer.launch({
     headless,
     args: [
-      '--remote-debugging-port=9222',
       '--no-first-run',
       '--disable-extensions',
       '--disable-gpu',
