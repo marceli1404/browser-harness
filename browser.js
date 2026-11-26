@@ -8,7 +8,9 @@ async function ensureDir(dir) {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 }
 
-async function launchBrowser(headless = false, viewport = { width: 1920, height: 1080 }) {
+const DEFAULT_HEADLESS = process.env.BROWSER_HARNESS_HEADLESS === '1' || process.env.CI === 'true';
+
+async function launchBrowser(headless = DEFAULT_HEADLESS, viewport = { width: 1920, height: 1080 }) {
   await ensureDir(SCREENSHOTS_DIR);
   const browser = await puppeteer.launch({
     headless,
@@ -480,13 +482,16 @@ async function multiTab(urls) {
   }
 }
 
-async function cookies(url) {
+async function cookies(url, showValues = false) {
   const { browser, page } = await launchBrowser();
   try {
     await page.goto(url, { waitUntil: 'networkidle2', timeout: 30000 });
-    const cookies = await page.cookies();
-    console.log(JSON.stringify(cookies, null, 2));
-    return cookies;
+    const pageCookies = await page.cookies();
+    const output = showValues
+      ? pageCookies
+      : pageCookies.map(cookie => ({ ...cookie, value: '<redacted>' }));
+    console.log(JSON.stringify(output, null, 2));
+    return output;
   } finally {
     await browser.close();
   }
@@ -553,7 +558,7 @@ Navigation:
   fill <url> <selector> <value>    Fill input and submit
   exec <url> <js-expression>       Run JS in page context
   download <url> [filename]        Save page HTML
-  cookies <url>                    Get page cookies
+  cookies <url> [--show-values]    Get page cookies (values redacted by default)
   headers <url>                    Get page meta tags
   tabs <url1> <url2> ...           Open multiple tabs
 
@@ -598,7 +603,7 @@ Mouse Emulation:
         await downloadPage(args[0], args[1]);
         break;
       case 'cookies':
-        await cookies(args[0]);
+        await cookies(args[0], args.includes('--show-values'));
         break;
       case 'headers':
         await headers(args[0]);

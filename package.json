@@ -8,7 +8,8 @@
   },
   "scripts": {
     "start": "node browser.js",
-    "test": "node browser.js open https://example.com"
+    "test": "node --test test/*.test.js",
+    "test:smoke": "node --test test/smoke.test.js"
   },
   "keywords": [
     "browser",
